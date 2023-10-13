@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes entrance {
+    0% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.02);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  @keyframes entranceBackdrop {
+    0% {
+      opacity: 0;
+    }
+  
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes leaving {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.02);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+  }
+  
+  @keyframes leavingBackdrop {
+    0% {
+      opacity: 1;
+    }
+  
+    100% {
+      opacity: 0;
+    }
+  }
+  
+  
+  dialog {
+    animation: entrance 300ms ease-in-out;
+    animation-fill-mode: forwards;
+    box-shadow: 0px 30px 70px 0px rgba(0, 0, 0, 0.4);
+  }
+
+  dialog::backdrop {
+    backdrop-filter: blur(3px);
+    background: rgba(0, 0, 0, 0.5);
+    animation: entranceBackdrop 300ms ease-in-out;
+  }
+  
+  
+  dialog.close {
+    animation: leaving 300ms ease-in-out;
+    animation-fill-mode: forwards;
+  }
+  
+  dialog.close::backdrop {
+    animation: leavingBackdrop 300ms ease-in-out;
+    animation-fill-mode: forwards;
+  }
+  
