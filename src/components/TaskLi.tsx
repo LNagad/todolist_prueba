@@ -26,7 +26,7 @@ const TaskLi = ({id, title, content = '', date, isFinished} : Task) => {
    
    return (
       <li 
-         onClick={ handleIsCompleted } 
+         onDoubleClick={ handleIsCompleted } 
          className="group relative flex items-center px-3 py-2 gap-x-3 hover:bg-indigo-700 rounded-2xl">
          <input 
             onClick={ handleIsCompleted} 
