@@ -1,3 +1,3 @@
-export * from './dateUtils';
-export * from './domiData';
-export * from './index';
+export * from './dateUtils'
+export * from './domiData'
+export * from './index'

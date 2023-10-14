@@ -16,8 +16,10 @@ module.exports = {
     ],
     'quotes': ['error', 'single'],
     'semi': ['error', 'never'],
-    'no-unused-vars': 'off',
-    '@typescript-eslint/no-unused-vars': ['warn'],
+    'no-unused-vars': ['warn'],
+    'react-hooks/exhaustive-deps': 'off',
+    '@typescript-eslint/no-explicit-any': ['off'],
+    '@typescript-eslint/no-unused-vars': ['off'],
     'indent': ['error', 3, { SwitchCase: 1 }],
   },
 }

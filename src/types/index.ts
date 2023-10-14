@@ -1,1 +1,1 @@
-export * from './taskTypes.d';
+export * from './taskTypes.d'
