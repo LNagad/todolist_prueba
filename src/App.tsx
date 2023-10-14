@@ -4,6 +4,7 @@ import { useAddNewModal } from './hooks';
 import { useTaskStore } from './store';
 import { getMonthName } from './utils';
 import { domiData } from './utils';
+import { useEffect } from 'react';
 
 const currentDate = new Date();
 const currentDay = currentDate.getDate();
@@ -13,8 +14,13 @@ const monthName = getMonthName(monthIndex);
 
 function App() {
    const { modalRef, handleCloseModal, handleShowModal } = useAddNewModal();
-   const { activeTask }  = useTaskStore(state => state)
-   console.log(activeTask)
+   const { activeTask, tasks, loadTasks, isLoadingTasks, setIsLoadingTasks }  = useTaskStore(state => state)
+   
+   useEffect(() => {
+      setIsLoadingTasks(true)
+      loadTasks(domiData)
+      setIsLoadingTasks(false)
+   },[])
 
 
    return (
@@ -41,7 +47,7 @@ function App() {
          '  </div>
             <div className='bg-slate-50  h-[calc(100vh-144px)] rounded-tl-[30px] p-6 shadow-xl'>
                <ul className="flex flex-col gap-y-2">
-                  {domiData
+                  {tasks
                      .sort((a, b) => Number(a.isFinished) - Number(b.isFinished)) // Sort by isFinished in ascending order
                      .map((item, index) => (
                         <TaskLi key={index} {...item} />
