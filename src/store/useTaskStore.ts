@@ -2,13 +2,25 @@ import { create } from 'zustand'
 import { Task } from '../types'
 
 interface TaskState {
+  tasks: Task[]
   activeTask: Task | null
-  setActiveTask: (task: Task) => void
+  isLoadingTasks: boolean
+  isSavingTask: boolean
+  loadTasks: (tasks: Task[]) => void
+  setIsLoadingTasks: (isLoadingTasks: boolean) => void
+  setIsSavingTask: (isSavingTask: boolean) => void
   clearActiveTask: () => void
+  setActiveTask: (task: Task) => void
 }
 
 export const useTaskStore = create<TaskState>()((set) => ({
+   tasks: [],
    activeTask: null,
+   isLoadingTasks: false,
+   isSavingTask: false,
+   loadTasks: (tasks: Task[]) => set((state) => ({ tasks: tasks })),
+   setIsSavingTask: (isSavingTask: boolean) => set((state) => ({ isSavingTask: isSavingTask })),
+   setIsLoadingTasks: (isLoadingTasks: boolean) => set((state) => ({ isLoadingTasks: isLoadingTasks })),
    setActiveTask: (task) => set((state) => ({ activeTask: task })),
    clearActiveTask: () => set((state) => ({ activeTask: null}))
 }))

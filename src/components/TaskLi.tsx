@@ -6,7 +6,7 @@ import { CgTrash }from 'react-icons/cg'
 
 const TaskLi = ({id, title, content = '', date, isFinished} : Task) => {
    const [isCompleted, setIsCompleted] = useState(isFinished)
-   const { activeTask, setActiveTask, clearActiveTask }  = useTaskStore(state => state)
+   const { activeTask, setActiveTask } = useTaskStore(state => state)
 
    
    const handleIsCompleted = () => {
