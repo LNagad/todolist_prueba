@@ -25,8 +25,8 @@ const TaskLi = ({title, content, date, isFinished} : Props) => {
    
    return (
       <li 
-         onClick={ handleIsCompleted } 
-         className="group flex items-center px-3 py-2 gap-x-3 hover:bg-indigo-700 rounded-2xl">
+         onDoubleClick={ handleIsCompleted } 
+         className="group relative flex items-center px-3 py-2 gap-x-3 hover:bg-indigo-700 rounded-2xl">
          <input 
             onClick={ handleIsCompleted} 
             checked={isCompleted} 
@@ -43,7 +43,8 @@ const TaskLi = ({title, content, date, isFinished} : Props) => {
                {date}
             </p>
          </div>
-         <button type='button' className="bg-indigo-700 custom-shadow p-2 rounded-full absolute z-50 right-10 bottom-32 hidden group-hover:flex">
+         <button type='button' className="bg-transparent p-2 rounded-full 
+            absolute z-50 right-0  hidden group-hover:flex">
             <HiMiniPencilSquare className='text-white text-4xl ' />
          </button>
       </li>
