@@ -1,5 +1,7 @@
+import { CgTrash } from 'react-icons/cg';
 import { Modal, TaskLi } from './components';
 import { useAddNewModal } from './hooks';
+import { useTaskStore } from './store';
 import { getMonthName } from './utils';
 import { domiData } from './utils';
 
@@ -11,6 +13,9 @@ const monthName = getMonthName(monthIndex);
 
 function App() {
    const { modalRef, handleCloseModal, handleShowModal } = useAddNewModal();
+   const { activeTask }  = useTaskStore(state => state)
+   console.log(activeTask)
+
 
    return (
       <main className="bg-indigo-700 w-screen h-screen relative">

@@ -1,15 +1,13 @@
 import { useState } from 'react'
+import { useTaskStore } from '../store'
+import { Task } from '../types'
 import { HiMiniPencilSquare } from 'react-icons/hi2'
+import { CgTrash }from 'react-icons/cg'
 
-interface Props {
-   title: string
-   content?: string
-   date: string
-   isFinished: boolean
-}
-
-const TaskLi = ({title, content, date, isFinished} : Props) => {
+const TaskLi = ({id, title, content = '', date, isFinished} : Task) => {
    const [isCompleted, setIsCompleted] = useState(isFinished)
+   const { activeTask, setActiveTask, clearActiveTask }  = useTaskStore(state => state)
+
    
    const handleIsCompleted = () => {
       //TODO: Dispatch action to set task to completed
@@ -22,9 +20,15 @@ const TaskLi = ({title, content, date, isFinished} : Props) => {
       //TODO: Dispatch action to set modal to open
       alert('Editing task')
    }
+
+   const handleSetActiveTask = () => {
+      if (activeTask?.id === id) return
+      setActiveTask({id, title, content, date, isFinished})
+   }
    
    return (
       <li 
+         onMouseEnter={ handleSetActiveTask }
          onDoubleClick={ handleIsCompleted } 
          className="group relative flex items-center px-3 py-2 gap-x-3 hover:bg-indigo-700 rounded-2xl">
          <input 
@@ -43,8 +47,12 @@ const TaskLi = ({title, content, date, isFinished} : Props) => {
                {date}
             </p>
          </div>
+         <button type='button' className={`bg-transparent p-2 rounded-full 
+            absolute z-50  right-0 hidden group-hover:flex`}>
+            <CgTrash className='text-white text-4xl ' />
+         </button>
          <button type='button' className="bg-transparent p-2 rounded-full 
-            absolute z-50 right-0  hidden group-hover:flex">
+            absolute z-50 right-9  hidden group-hover:flex">
             <HiMiniPencilSquare className='text-white text-4xl ' />
          </button>
       </li>
