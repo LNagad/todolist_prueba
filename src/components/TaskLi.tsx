@@ -5,31 +5,24 @@ import { CgTrash }from 'react-icons/cg'
 
 const TaskLi = ({id, title, content = '', date, isFinished} : Task) => {
       
-   const activeTask  = useTaskStore(state => state.activeTask)
-   const setActiveTask  = useTaskStore(state => state.setActiveTask)
+   const tasks = useTaskStore(state => state.tasks)
    const loadTasks = useTaskStore(state => state.loadTasks)
-   const tasks= useTaskStore(state => state.tasks)
+   const setShowEditModal = useTaskStore(state => state.setShowEditModal)
+   const setEditModalTask = useTaskStore(state => state.setEditModalTask)
    
    const handleIsCompleted = () => {
-      //TODO: Dispatch action to set task to completed
-      console.log('handle is completed')
       const newTasks = tasks.filter(task => task.id !== id)
       const allTasks = [...newTasks, {id, title, content, date, isFinished: !isFinished}]
-      console.log(allTasks)
+      
+      //TODO: Dispatch action to SAVE TASK TO FIREBASE
       loadTasks(allTasks)
-
    }
 
    const handleEditTask = () => {
-      //TODO: Dispatch action to set editing mode
-      //TODO: Dispatch action to set task to edit
-      //TODO: Dispatch action to set modal to open
-      alert('Editing task')
+      setEditModalTask({id, title, content, date, isFinished})
+      setShowEditModal(true)
    }
 
-   const handleSetActiveTask = () => {
-      setActiveTask({id, title, content, date, isFinished})
-   }
    
    return (
       <li 
@@ -56,7 +49,7 @@ const TaskLi = ({id, title, content = '', date, isFinished} : Task) => {
             absolute z-50  right-0 hidden group-hover:flex`}>
             <CgTrash className='text-white text-4xl ' />
          </button>
-         <button type='button' className="bg-transparent p-2 rounded-full 
+         <button onClick={ handleEditTask } type='button' className="bg-transparent p-2 rounded-full 
             absolute z-50 right-9  hidden group-hover:flex">
             <HiMiniPencilSquare className='text-white text-4xl ' />
          </button>

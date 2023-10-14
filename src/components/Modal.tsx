@@ -1,16 +1,24 @@
+import { Task } from '../types'
+
 interface Props {
     handleCloseModal: () => void
     modalRef:  React.RefObject<HTMLDialogElement>
+    task?: Task | null
 }
 
-const Modal = ({ modalRef, handleCloseModal } : Props) => {
+const Modal = ({ modalRef, handleCloseModal, task } : Props) => {
+
+   const modalTitle = task ? 
+      <p>Editing task<strong className="ms-1">{task.title}</strong></p>
+      : 'Add new task'
+   
    return (
       <dialog 
          ref={modalRef}
          className="dialog hidden p-5 w-11/12 lg:w-7/12 rounded-xl bg-white flex-col gap-y-4 "  
       >
          <div className="flex flex-col gap-y-4">
-            <h3>Add new Task</h3>
+            <h3>{modalTitle}</h3>
             <form>
                <div className="w-full flex flex-col gap-y-2">
                   <input 

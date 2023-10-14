@@ -1,20 +1,41 @@
-import { useEffect } from 'react';
-import { useTaskStore } from './store';
-import { useAddNewModal } from './hooks';
-import { getMonthName, domiData } from './utils';
-import { Modal, TaskLi } from './components';
+import { useEffect } from 'react'
+import { useTaskStore } from './store'
+import { useModal } from './hooks'
+import { getMonthName, domiData } from './utils'
+import { Modal, TaskLi } from './components'
 
-const currentDate = new Date();
-const currentDay = currentDate.getDate();
-const monthIndex  = currentDate.getMonth();
-const monthName = getMonthName(monthIndex);
+const currentDate = new Date()
+const currentDay = currentDate.getDate()
+const monthIndex  = currentDate.getMonth()
+const monthName = getMonthName(monthIndex)
 
 
 function App() {
-   const { modalRef, handleCloseModal, handleShowModal } = useAddNewModal();
-   const { tasks, loadTasks, isLoadingTasks, setIsLoadingTasks }  = useTaskStore(state => state)
    console.log('re render')
+
+   const { tasks, loadTasks, isLoadingTasks, setIsLoadingTasks }  = useTaskStore(state => state)
+   const showEditModal = useTaskStore(state => state.showEditModal)
+   const editModalTask = useTaskStore(state => state.editModalTask)
+   const setShowEditModal = useTaskStore(state => state.setShowEditModal)
+
+   const { 
+      modalRef, 
+      handleCloseModal,
+      handleShowModal 
+   } = useModal()
+
+   const { 
+      modalRef : editModalRef, 
+      handleCloseModal : handleEditClose, 
+      handleShowModal: handleShowEditModal 
+   } = useModal()
+
   
+   const handleEditCloseModal = () => {
+      setShowEditModal(false)
+      handleEditClose()
+   }
+
    useEffect(() => {
       console.log('re render effect')
 
@@ -23,6 +44,7 @@ function App() {
       setIsLoadingTasks(false)
    },[])
 
+   showEditModal && handleShowEditModal()
 
    return (
       <main className="bg-indigo-700 w-screen h-screen relative">
@@ -57,8 +79,9 @@ function App() {
             </div>
          </section>
          <Modal modalRef={ modalRef } handleCloseModal={ handleCloseModal } />
+         <Modal modalRef={ editModalRef } handleCloseModal={ handleEditCloseModal } task={ editModalTask } />
       </main>
-   );
+   )
 }
 
-export default App;
+export default App
