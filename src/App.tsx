@@ -1,6 +1,7 @@
-import { Modal, TaskLi } from "./components";
-import { useAddNewModal } from "./hooks";
-import { getMonthName } from "./utils";
+import { Modal, TaskLi } from './components';
+import { useAddNewModal } from './hooks';
+import { getMonthName } from './utils';
+import { domiData } from './utils';
 
 const currentDate = new Date();
 const currentDay = currentDate.getDate();
@@ -35,10 +36,11 @@ function App() {
          '  </div>
             <div className='bg-slate-50  h-[calc(100vh-144px)] rounded-tl-[30px] p-6 shadow-xl'>
                <ul className="flex flex-col gap-y-2">
-                  <TaskLi />
-                  <TaskLi />
-                  <TaskLi />
-                  
+                  {domiData
+                     .sort((a, b) => Number(a.isFinished) - Number(b.isFinished)) // Sort by isFinished in ascending order
+                     .map((item, index) => (
+                        <TaskLi key={index} {...item} />
+                     ))}
                </ul>
             </div>
          </section>

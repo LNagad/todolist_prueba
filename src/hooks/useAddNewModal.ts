@@ -1,16 +1,16 @@
-import { useRef } from "react";
+import { useRef } from 'react';
 
 const UseAddNewModal = () => {
    const modalRef = useRef<HTMLDialogElement>(null);
 
    const handleShowModal = () => {
-      modalRef.current?.classList.remove("close");
-      modalRef.current?.classList.remove("hidden");
+      modalRef.current?.classList.remove('close');
+      modalRef.current?.classList.remove('hidden');
       modalRef.current?.showModal();
    }
  
    const handleCloseModal = () => {
-      modalRef.current?.classList.add("close");
+      modalRef.current?.classList.add('close');
       setTimeout(() => {
          modalRef.current?.close();
       }, 500);
