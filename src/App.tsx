@@ -1,4 +1,4 @@
-import { Modal } from "./components";
+import { Modal, TaskLi } from "./components";
 import { useAddNewModal } from "./hooks";
 import { getMonthName } from "./utils";
 
@@ -35,24 +35,9 @@ function App() {
          '  </div>
             <div className='bg-slate-50  h-[calc(100vh-144px)] rounded-tl-[30px] p-6 shadow-xl'>
                <ul className="flex flex-col gap-y-2">
-                  <li className="group flex items-center px-3 py-2 gap-x-3 hover:bg-indigo-700 rounded-2xl">
-                     <input type="checkbox" className="checked:bg-indigo-700 outline-none text-indigo-700 w-4 rounded-xl" />
-                     <div>
-                        <p className="group-hover:text-white text-gray-500 font-bold outline-none focus:outline-none focus:ring-0 ring-0 text-sm text-opacity-80">item 1</p>
-                        <p className="group-hover:text-white group-hover:text-opacity-60 text-gray-500 
-                        font-semibold text-xs text-opacity-50">12/14/2200
-                        </p>
-                     </div>
-                  </li>
-                  <li className="group flex items-center px-3 py-2 gap-x-3 hover:bg-indigo-700 rounded-2xl">
-                     <input type="checkbox" className="checked:bg-indigo-700 text-indigo-700 w-4 rounded-xl" />
-                     <div>
-                        <p className="group-hover:text-white text-gray-500 font-bold outline-none focus:outline-none focus:ring-0 ring-0 text-sm text-opacity-80">item 1</p>
-                        <p className="group-hover:text-white group-hover:text-opacity-60 text-gray-500 
-                        font-semibold text-xs text-opacity-50">12/14/2200
-                        </p>
-                     </div>
-                  </li>
+                  <TaskLi />
+                  <TaskLi />
+                  <TaskLi />
                   
                </ul>
             </div>

@@ -5,6 +5,7 @@ const UseAddNewModal = () => {
 
    const handleShowModal = () => {
       modalRef.current?.classList.remove("close");
+      modalRef.current?.classList.remove("hidden");
       modalRef.current?.showModal();
    }
  
