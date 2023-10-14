@@ -21,6 +21,10 @@ export const useTaskStore = create<TaskState>()((set) => ({
    loadTasks: (tasks: Task[]) => set((state) => ({ tasks: tasks })),
    setIsSavingTask: (isSavingTask: boolean) => set((state) => ({ isSavingTask: isSavingTask })),
    setIsLoadingTasks: (isLoadingTasks: boolean) => set((state) => ({ isLoadingTasks: isLoadingTasks })),
-   setActiveTask: (task) => set((state) => ({ activeTask: task })),
+   setActiveTask: (task: Task) => set((state) => {
+      if (state.activeTask?.id === task.id) return state
+      return { activeTask: task }
+   }),
    clearActiveTask: () => set((state) => ({ activeTask: null}))
 }))
+

@@ -1,10 +1,8 @@
-import { CgTrash } from 'react-icons/cg';
-import { Modal, TaskLi } from './components';
-import { useAddNewModal } from './hooks';
-import { useTaskStore } from './store';
-import { getMonthName } from './utils';
-import { domiData } from './utils';
 import { useEffect } from 'react';
+import { useTaskStore } from './store';
+import { useAddNewModal } from './hooks';
+import { getMonthName, domiData } from './utils';
+import { Modal, TaskLi } from './components';
 
 const currentDate = new Date();
 const currentDay = currentDate.getDate();
@@ -14,9 +12,12 @@ const monthName = getMonthName(monthIndex);
 
 function App() {
    const { modalRef, handleCloseModal, handleShowModal } = useAddNewModal();
-   const { activeTask, tasks, loadTasks, isLoadingTasks, setIsLoadingTasks }  = useTaskStore(state => state)
-   
+   const { tasks, loadTasks, isLoadingTasks, setIsLoadingTasks }  = useTaskStore(state => state)
+   console.log('re render')
+  
    useEffect(() => {
+      console.log('re render effect')
+
       setIsLoadingTasks(true)
       loadTasks(domiData)
       setIsLoadingTasks(false)

@@ -1,17 +1,23 @@
-import { useState } from 'react'
 import { useTaskStore } from '../store'
 import { Task } from '../types'
 import { HiMiniPencilSquare } from 'react-icons/hi2'
 import { CgTrash }from 'react-icons/cg'
 
 const TaskLi = ({id, title, content = '', date, isFinished} : Task) => {
-   const [isCompleted, setIsCompleted] = useState(isFinished)
-   const { activeTask, setActiveTask } = useTaskStore(state => state)
-
+      
+   const activeTask  = useTaskStore(state => state.activeTask)
+   const setActiveTask  = useTaskStore(state => state.setActiveTask)
+   const loadTasks = useTaskStore(state => state.loadTasks)
+   const tasks= useTaskStore(state => state.tasks)
    
    const handleIsCompleted = () => {
       //TODO: Dispatch action to set task to completed
-      setIsCompleted(!isCompleted)
+      console.log('handle is completed')
+      const newTasks = tasks.filter(task => task.id !== id)
+      const allTasks = [...newTasks, {id, title, content, date, isFinished: !isFinished}]
+      console.log(allTasks)
+      loadTasks(allTasks)
+
    }
 
    const handleEditTask = () => {
@@ -22,22 +28,21 @@ const TaskLi = ({id, title, content = '', date, isFinished} : Task) => {
    }
 
    const handleSetActiveTask = () => {
-      if (activeTask?.id === id) return
       setActiveTask({id, title, content, date, isFinished})
    }
    
    return (
       <li 
-         onMouseEnter={ handleSetActiveTask }
-         onDoubleClick={ handleIsCompleted } 
+         onClick={ handleIsCompleted } 
          className="group relative flex items-center px-3 py-2 gap-x-3 hover:bg-indigo-700 rounded-2xl">
          <input 
             onClick={ handleIsCompleted} 
-            checked={isCompleted} 
+            checked={isFinished} 
+            onChange={() => {}}
             type="checkbox" 
             className="checked:bg-indigo-700 outline-none text-indigo-700 w-4 rounded-xl" />
          <div> 
-            <p className={`select-none ${isCompleted && 'line-through'} group-hover:text-white
+            <p className={`select-none ${isFinished && 'line-through'} group-hover:text-white
              text-gray-500 font-bold outline-none focus:outline-none focus:ring-0 ring-0
               text-sm text-opacity-80`}>
                {title}
