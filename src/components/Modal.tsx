@@ -31,7 +31,7 @@ const Modal = ({ modalRef, handleCloseModal } : Props) => {
          <div className="w-full flex justify-between">
             <button 
                onClick={handleCloseModal}
-               className="bg-gray-600 px-4 py-3 self-start rounded-xl text-white">Close</button>
+               className="bg-gray-600 px-4 py-3 self-start rounded-xl text-white">Cancel</button>
             
             <button 
                onClick={handleCloseModal}
