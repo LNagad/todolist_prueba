@@ -57,7 +57,7 @@ function App() {
                <div className="flex justify-between items-end">
                   <div className="font-bold">
                      <h2 className="text-lg text-white">Today</h2>
-                     <p className="text-xs -mt-0.5 text-white text-opacity-70">8 tasks</p>
+                     <p className="text-xs -mt-0.5 text-white text-opacity-70">{tasks?.length} tasks</p>
                   </div>
                   
                   <button 
