@@ -1,5 +1,7 @@
 import { Task } from '../types'
 import { useForm } from '../hooks'
+import { useFireStore } from '../firebase'
+import Swal from 'sweetalert2'
 
 interface Props {
     handleCloseModal: () => void
@@ -10,10 +12,23 @@ interface Props {
 const Modal = ({ modalRef, handleCloseModal, task } : Props) => {
    
    const { title, content, date, handleOnChange }= useForm(task)
+   const { startSavingTask } = useFireStore()
 
    const modalTitle = task ? 
       <p>Editing task<strong className="ms-1">{task.title}</strong></p>
       : 'Add new task'
+
+   const handleOnSubmit = async() => {
+      
+      if(task) {
+         console.log('update task')
+      } else {
+         console.log('add task')
+         const res =  await startSavingTask({ title, content, date, isFinished: false })
+         handleCloseModal()
+         if (res) Swal.fire('Task added', '', 'success')
+      }
+   }
    
    return (
       <dialog 
@@ -22,7 +37,7 @@ const Modal = ({ modalRef, handleCloseModal, task } : Props) => {
       >
          <div className="flex flex-col gap-y-4">
             <h3>{modalTitle}</h3>
-            <form>
+            <form onSubmit={(e) => e.preventDefault()}>
                <div className="w-full flex flex-col gap-y-2">
                   <input 
                      autoComplete='off'
@@ -57,7 +72,8 @@ const Modal = ({ modalRef, handleCloseModal, task } : Props) => {
                   className="bg-gray-600 px-4 py-3 self-start rounded-xl text-white">Cancel</button>
              
                <button 
-                  onClick={handleCloseModal}
+                  onClick={handleOnSubmit}
+                  type='submit'
                   className="bg-indigo-700 px-4 py-3 self-start rounded-xl text-white">
                   {task ? 'Update' : 'Add'}
                </button>
