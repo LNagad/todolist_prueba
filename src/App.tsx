@@ -67,8 +67,8 @@ function App() {
                      Add New
                   </button>
                </div>
-         '  </div>
-            <div className='bg-slate-50  h-[calc(100vh-144px)] rounded-tl-[30px] p-6 shadow-xl'>
+            </div>
+            <div className='bg-slate-50 h-[calc(100vh-144px)] rounded-tl-[30px] p-6 shadow-xl'>
                <ul className="flex flex-col gap-y-2">
                   {tasks
                      .sort((a, b) => Number(a.isFinished) - Number(b.isFinished)) // Sort by isFinished in ascending order

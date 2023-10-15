@@ -18,7 +18,7 @@ const Modal = ({ modalRef, handleCloseModal, task } : Props) => {
    return (
       <dialog 
          ref={modalRef}
-         className="dialog hidden p-5 w-11/12 lg:w-7/12 rounded-xl bg-white flex-col gap-y-4 "  
+         className="dialog hidden p-5 w-11/12 md:w-6/12 lg:w-5/12 rounded-xl bg-white flex-col gap-y-4 "  
       >
          <div className="flex flex-col gap-y-4">
             <h3>{modalTitle}</h3>
