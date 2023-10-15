@@ -3,6 +3,7 @@ import { useTaskStore } from './store'
 import { useModal } from './hooks'
 import { getMonthName, domiData } from './utils'
 import { Modal, TaskLi } from './components'
+import { useFireStore } from './firebase'
 
 const currentDate = new Date()
 const currentDay = currentDate.getDate()
@@ -11,9 +12,11 @@ const monthName = getMonthName(monthIndex)
 
 
 function App() {
-   console.log('re render')
 
-   const { tasks, loadTasks, isLoadingTasks, setIsLoadingTasks }  = useTaskStore(state => state)
+   const { startLoadingTasks } = useFireStore()
+
+   const { tasks, isLoadingTasks }  = useTaskStore(state => state)
+
    const showEditModal = useTaskStore(state => state.showEditModal)
    const editModalTask = useTaskStore(state => state.editModalTask)
    const setShowEditModal = useTaskStore(state => state.setShowEditModal)
@@ -38,10 +41,7 @@ function App() {
 
    useEffect(() => {
       console.log('re render effect')
-
-      setIsLoadingTasks(true)
-      loadTasks(domiData)
-      setIsLoadingTasks(false)
+      startLoadingTasks()
    },[])
 
    showEditModal && handleShowEditModal()

@@ -21,12 +21,14 @@ const Modal = ({ modalRef, handleCloseModal, task } : Props) => {
    const handleOnSubmit = async() => {
       
       if(task) {
-         console.log('update task')
+         const res =  await startSavingTask({ id: task.id, title, content, date, isFinished: task.isFinished })
+         handleCloseModal()
+         if (res) Swal.fire('Task Updated!', '', 'success')
       } else {
-         console.log('add task')
+         
          const res =  await startSavingTask({ title, content, date, isFinished: false })
          handleCloseModal()
-         if (res) Swal.fire('Task added', '', 'success')
+         if (res) Swal.fire('Task added!', '', 'success')
       }
    }
    

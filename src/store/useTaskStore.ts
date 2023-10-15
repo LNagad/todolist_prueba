@@ -8,7 +8,7 @@ interface TaskState {
   isSavingTask: boolean
   showEditModal: boolean
   editModalTask: Task | null
-  loadTasks: (tasks: Task[]) => void
+  loadTasks: (tasks: []) => void
   setEditModalTask: (task: Task) => void
   setShowEditModal: (showModal: boolean) => void
   setIsLoadingTasks: (isLoadingTasks: boolean) => void
