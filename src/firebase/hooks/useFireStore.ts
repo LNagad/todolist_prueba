@@ -50,7 +50,6 @@ export const useFireStore = () => {
 
    const startDeletingTask = async (task: Task) => {
       const docRef = doc( FirebaseDB, `tasks/${task.id}`)
-      console.log(task)
       const docSnapshot = await getDoc(docRef)
 
       if (docSnapshot.exists()) {

@@ -40,7 +40,6 @@ function App() {
    }
 
    useEffect(() => {
-      console.log('re render effect')
       startLoadingTasks()
    },[])
 
