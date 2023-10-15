@@ -6,21 +6,30 @@ import { useTaskStore } from '../../store'
 export const useFireStore = () => {
    const setIsLoadingTasks = useTaskStore( state => state.setIsLoadingTasks )
    const loadTasks = useTaskStore( state => state.loadTasks )
+   const addNewTask = useTaskStore( state => state.addNewTask )
+   const updateTask = useTaskStore( state => state.updateTask )
+   const setIsSavingTask = useTaskStore( state => state.setIsSavingTask )
 
    const startSavingTask = async (task: Task) => {
-      //TODO: DISPATCH SET SAVING LOADING
-   
+      
+      setIsSavingTask(true)
       const newNote = {...task}
-   
+      
       if (task.id) {
          const docRef = doc(FirebaseDB, `tasks/${newNote.id}`)
          await setDoc(docRef, newNote, { merge: true })
+         updateTask(newNote)
+         
       } else {
          const newDoc = doc(collection(FirebaseDB, 'tasks'))
          newNote.id = newDoc.id
          await setDoc(newDoc, newNote, { merge: true })
-         return true
+         addNewTask(newNote)
+
       }
+      
+      setIsSavingTask(false)
+      return true
    }
 
    const startLoadingTasks = async () => {
