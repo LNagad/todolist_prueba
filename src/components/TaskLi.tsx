@@ -3,14 +3,16 @@ import { Task } from '../types'
 import { HiMiniPencilSquare } from 'react-icons/hi2'
 import { CgTrash }from 'react-icons/cg'
 import Swal from 'sweetalert2'
+import { useFireStore } from '../firebase'
 
 const TaskLi = ({id, title, content = '', date, isFinished} : Task) => {
-      
+   
    const tasks = useTaskStore(state => state.tasks)
    const loadTasks = useTaskStore(state => state.loadTasks)
    const setShowEditModal = useTaskStore(state => state.setShowEditModal)
    const setEditModalTask = useTaskStore(state => state.setEditModalTask)
-   
+   const { startDeletingTask } = useFireStore()
+
    const handleIsCompleted = () => {
       const newTasks = tasks.filter(task => task.id !== id)
       const allTasks = [...newTasks, {id, title, content, date, isFinished: !isFinished}]
@@ -24,9 +26,8 @@ const TaskLi = ({id, title, content = '', date, isFinished} : Task) => {
       setShowEditModal(true)
    }
 
-   const handleDeleteTask = () => {
-      
-      Swal.fire({
+   const handleDeleteTask = async () => {
+      const result = await Swal.fire({
          title: 'Are you sure?',
          text: 'You won\'t be able to recover this task!',
          icon: 'warning',
@@ -34,18 +35,18 @@ const TaskLi = ({id, title, content = '', date, isFinished} : Task) => {
          confirmButtonColor: '#3085d6',
          cancelButtonColor: '#d33',
          confirmButtonText: 'Yes, delete it!'
-      }).then((result) => {
-         if (result.isConfirmed) {
-            Swal.fire(
-               'Deleted!',
-               `Task ${title} has been deleted.`,
-               'success'
-            )
-         }
       })
-      
-      //TODO: Dispatch action to DELETE TASK FROM FIREBASE
-
+    
+      if (result.isConfirmed) {
+         const success = await startDeletingTask({id, title, content, date, isFinished})
+    
+         if (success) {
+            Swal.fire('Deleted!', `Task ${title} has been deleted.`, 'success')
+         } else {
+            console.log(success)
+            Swal.fire('Error', 'Something went wrong', 'error')
+         }
+      }
    }
 
    

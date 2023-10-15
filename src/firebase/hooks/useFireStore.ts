@@ -8,7 +8,23 @@ export const useFireStore = () => {
    const loadTasks = useTaskStore( state => state.loadTasks )
    const addNewTask = useTaskStore( state => state.addNewTask )
    const updateTask = useTaskStore( state => state.updateTask )
+   const deleteTask = useTaskStore( state => state.deleteTask )
    const setIsSavingTask = useTaskStore( state => state.setIsSavingTask )
+
+   const startLoadingTasks = async () => {
+      setIsLoadingTasks(true)
+      const collectionRef = collection(FirebaseDB, 'tasks')
+      const docsRef = await getDocs( collectionRef )
+   
+      const notes: any = []
+
+      docsRef.forEach( doc => {
+         notes.push( {...doc.data()})
+      })
+
+      loadTasks(notes)
+      setIsLoadingTasks(false)
+   }
 
    const startSavingTask = async (task: Task) => {
       
@@ -27,28 +43,35 @@ export const useFireStore = () => {
          addNewTask(newNote)
 
       }
-      
+
       setIsSavingTask(false)
       return true
    }
 
-   const startLoadingTasks = async () => {
-      setIsLoadingTasks(true)
-      const collectionRef = collection(FirebaseDB, 'tasks')
-      const docsRef = await getDocs( collectionRef )
-   
-      const notes: any = []
+   const startDeletingTask = async (task: Task) => {
+      const docRef = doc( FirebaseDB, `tasks/${task.id}`)
+      console.log(task)
+      const docSnapshot = await getDoc(docRef)
 
-      docsRef.forEach( doc => {
-         notes.push( {...doc.data()})
-      })
-
-      loadTasks(notes)
-      setIsLoadingTasks(false)
+      if (docSnapshot.exists()) {
+         // El documento existe, se puede eliminar
+         try {
+            await deleteDoc(docRef)
+            deleteTask(task)
+            return true
+         } catch (error) {
+            console.error(error)
+            return false
+         }
+      } else {
+         // El documento no existe, no se puede eliminar
+         return false
+      }
    }
 
    return {
       startSavingTask,
-      startLoadingTasks
+      startLoadingTasks,
+      startDeletingTask
    }
 }
