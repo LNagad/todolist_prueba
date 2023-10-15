@@ -5,20 +5,14 @@ import { CgTrash }from 'react-icons/cg'
 import Swal from 'sweetalert2'
 import { useFireStore } from '../firebase'
 
-const TaskLi = ({id, title, content = '', date, isFinished} : Task) => {
+const TaskLi = ({id, title, content, date, isFinished} : Task) => {
    
-   const tasks = useTaskStore(state => state.tasks)
-   const loadTasks = useTaskStore(state => state.loadTasks)
    const setShowEditModal = useTaskStore(state => state.setShowEditModal)
    const setEditModalTask = useTaskStore(state => state.setEditModalTask)
-   const { startDeletingTask } = useFireStore()
+   const { startDeletingTask, startSavingTask } = useFireStore()
 
    const handleIsCompleted = () => {
-      const newTasks = tasks.filter(task => task.id !== id)
-      const allTasks = [...newTasks, {id, title, content, date, isFinished: !isFinished}]
-      
-      //TODO: Dispatch action to SAVE TASK TO FIREBASE
-      loadTasks(allTasks)
+      startSavingTask({id, title, content, date, isFinished: !isFinished})
    }
 
    const handleEditTask = () => {

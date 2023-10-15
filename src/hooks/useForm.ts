@@ -11,11 +11,11 @@ const useForm = (task: Task | null | undefined) => {
      
    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target
-        
-      setForm({
-         ...form,
-         [name]: value
-      })
+      setForm({ ...form, [name]: value })
+   }
+
+   const handleResetForm = () => {
+      setForm({ title: '', content: '', date:  '' })
    }
   
    useEffect(() => {
@@ -32,7 +32,8 @@ const useForm = (task: Task | null | undefined) => {
       title, 
       content, 
       date, 
-      handleOnChange
+      handleOnChange,
+      handleResetForm
    }
 }
 

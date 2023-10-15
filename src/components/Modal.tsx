@@ -12,7 +12,7 @@ interface Props {
 
 const Modal = ({ modalRef, handleCloseModal, task } : Props) => {
    
-   const { title, content, date, handleOnChange }= useForm(task)
+   const { title, content, date, handleOnChange, handleResetForm }= useForm(task)
    const { isSavingTask }  = useTaskStore(state => state)
    const { startSavingTask } = useFireStore()
 
@@ -32,6 +32,7 @@ const Modal = ({ modalRef, handleCloseModal, task } : Props) => {
          handleCloseModal()
          if (res) Swal.fire('Task added!', '', 'success')
       }
+      handleResetForm()
    }
    
    return (
@@ -43,10 +44,12 @@ const Modal = ({ modalRef, handleCloseModal, task } : Props) => {
             <h3>{modalTitle}</h3>
             <form onSubmit={(e) => e.preventDefault()}>
                <div className="w-full flex flex-col gap-y-2">
+                  <input type="text"  autoComplete='off' autoFocus={true} className='hidden' />
                   <input 
-                     autoComplete='off'
                      name='title'
                      value={title}
+                     autoComplete='off'
+                     autoFocus={false}
                      onChange={handleOnChange}
                      className="w-full px-4 py-2 ring-gray-300 ring-1 ring-opacity-10 rounded-lg focus:ring-indigo-700" 
                      type="text" 
@@ -54,6 +57,7 @@ const Modal = ({ modalRef, handleCloseModal, task } : Props) => {
                   />
                   <textarea 
                      autoComplete='off'
+                     autoFocus={false}
                      name="content"
                      value={content}
                      onChange={handleOnChange} 
@@ -61,6 +65,7 @@ const Modal = ({ modalRef, handleCloseModal, task } : Props) => {
                      placeholder="task description">
                   </textarea>
                   <input 
+                     autoFocus={false}
                      autoComplete='off'
                      name="date"
                      value={date}
